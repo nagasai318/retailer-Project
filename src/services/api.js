@@ -1,5 +1,11 @@
-// src/services/api.js
+import  mockTransactions  from "../data/transactions";
+
 export const fetchTransactions = async () => {
-    return fetch("/api/transactions").then((res) => res.json());
-  };
-  //FOr Testing Purposes
+  return new Promise((resolve, reject) => {
+      if (mockTransactions) {
+        resolve(mockTransactions);
+      } else {
+        reject("Error fetching transactions");
+      }
+  });
+}

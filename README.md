@@ -1,81 +1,137 @@
-# Getting Started with Create React App
+# Rewards Processing Application
 
-This project is a retailer reward program that calculates and displays reward points for customers based on their transactions.
+This application processes customer transactions to calculate and display monthly and total reward points for each customer. It supports grouping rewards by month and filtering transactions based on specific criteria.
 
-## Overview
-This project is a retailer reward program that calculates and displays reward points for customers based on their transactions.
+## Features
 
-## Setup
+1. **Transaction Processing**: Processes a list of transactions to calculate reward points.
+2. **Monthly Rewards**: Aggregates reward points by customer, grouped by month and year.
+3. **Total Rewards**: Calculates total reward points for each customer.
+4. **Filtering**: Ignores transactions older than three months during monthly reward processing.
+5. **Unit Testing**: Includes comprehensive test cases for all utility functions using Jest.
+
+## File Structure
+
+```plaintext
+src/
+├── utils/
+│   ├── dataProcessor.js  # Core logic for rewards processing
+├── tests/
+│   ├── app.test.js       # Jest test cases
+├── assets/
+│   ├── loading.jpeg              # Loading state screenshot
+│   ├── allTransctions.jpeg       # Running state screenshot
+│   ├── ErrorFetching.jpeg        # Error state screenshot
+|   ├── testCases.jpeg            # Test Cases ScreenShot
+├── index.js              # Entry point
+```
+
+## Installation
+
 1. Clone the repository:
    ```bash
-   git clone https://github.com/nagasai318/retailer-Project.git
+   git clone https://github.com/nagasai318/retailer-Project
+   ```
+
+2. Navigate to the project directory:
+   ```bash
    cd retailer-reward-program
+   ```
 
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
+## Usage
 
-## Available Scripts
+1. Start the application:
+   ```bash
+   npm start
+   ```
 
-In the project directory, you can run:
+2. Run the tests:
+   ```bash
+   npm test
+   ```
 
-### `npm start`
+## Screenshots
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Running State
+![Running State](public/assets/allTransction.jpeg)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Latest Three Month Transactions 
+![Latest](public/assets//ThreeMonths.jpeg)
 
-### `npm test`
+### Loading State
+![Loading State](public/assets/Loading.jpeg)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Error State
+![Error State](public/assets/ErrorFetching.jpeg)
 
-### `npm run build`
+### Test Cases
+![Test Cases](public/assets/testCases.jpeg)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Core Functions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `calculateRewardPoints`
+Calculates reward points based on the amount spent:
+- 2 points for every dollar spent above $100.
+- 1 point for every dollar spent between $50 and $100.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `groupRewardsByMonth`
+Groups transactions by month and aggregates reward points.
 
-### `npm run eject`
+### `processMonthlyRewards`
+Filters transactions to include only the last three months and calculates aggregated reward points per customer per month.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### `processTotalRewards`
+Calculates total reward points for each customer by summing all transactions.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Test Cases
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Test Suite: `app.test.js`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### 1. **calculateRewardPoints**
+- Calculates reward points correctly for transactions below, within, and above thresholds.
 
-## Learn More
+#### 2. **groupRewardsByMonth**
+- Groups transactions by month and aggregates reward points.
+- Handles empty transactions gracefully.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 3. **processMonthlyRewards**
+- Filters transactions older than three months.
+- Processes and aggregates rewards correctly for valid transactions.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 4. **processTotalRewards**
+- Calculates total reward points for all customers.
 
-### Code Splitting
+### Running Tests
+Run the test suite:
+```bash
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Example Output:
+```plaintext
+PASS  tests/app.test.js
+  Data Processor Functions
+    calculateRewardPoints
+      ✓ calculates reward points correctly (5ms)
+    groupRewardsByMonth
+      ✓ groups transactions by month and aggregates rewards (4ms)
+    processMonthlyRewards
+      ✓ processes and filters latest 3 months of transactions (3ms)
+      ✓ handles edge case when transactions span exactly 3 months (2ms)
+      ✓ returns empty array for transactions older than 3 months (1ms)
+    processTotalRewards
+      ✓ calculates total rewards correctly for all customers (2ms)
+```
 
-### Analyzing the Bundle Size
+## Future Enhancements
+- Add a user interface to visualize the reward points.
+- Integrate with a database to store transactions persistently.
+- Implement additional filters and sorting options.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.

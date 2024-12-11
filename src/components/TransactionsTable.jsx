@@ -1,36 +1,37 @@
-// components/AllTransactions.js
 import React from "react";
+import { calculateRewardPoints } from "../utils/dataProcessor";
 
-const AllTransactions = ({ transactions }) => (
-  <div>
-    <h2>All Transactions</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Transaction ID</th>
-          <th>Customer ID</th>
-          <th>Customer Name</th>
-          <th>Purchase Date</th>
-          <th>Product Purchased</th>
-          <th>Price</th>
-          <th>Reward Points</th>
-        </tr>
-      </thead>
-      <tbody>
-        {transactions.map((txn) => (
-          <tr key={txn.transactionId}>
-            <td>{txn.transactionId}</td>
-            <td>{txn.customerId}</td>
-            <td>{txn.customerName}</td>
-            <td>{txn.purchaseDate}</td>
-            <td>{txn.product}</td>
-            <td>${txn.price.toFixed(2)}</td>
-            <td>{txn.rewardPoints}</td>
+// Component for Transactions Table
+const TransactionsTable = ({ transactions }) => {
+  return (
+    <div>
+      <h2>All Transactions</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Customer Name</th>
+            <th>Purchase Date</th>
+            <th>Product Purchased</th>
+            <th>Price</th>
+            <th>Reward Points</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+        </thead>
+        <tbody>
+          {transactions.map((transaction) => (
+            <tr key={transaction.transactionId}>
+              <td>{transaction.transactionId}</td>
+              <td>{transaction.customerName}</td>
+              <td>{transaction.transactionDate}</td>
+              <td>{transaction.productPurchased}</td>
+              <td>${transaction.amountSpent.toFixed(2)}</td>
+              <td>{calculateRewardPoints(transaction.amountSpent)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-export default AllTransactions;
+export default TransactionsTable;

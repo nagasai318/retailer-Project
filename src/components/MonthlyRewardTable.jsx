@@ -1,39 +1,49 @@
-// components/UserMonthlyRewards.js
 import React from "react";
+import { processMonthlyRewards,groupRewardsByMonth } from "../utils/dataProcessor";
 
-const UserMonthlyRewards = ({ groupedData }) => (
-  <div>
-    <h2>User Monthly Rewards</h2>
-    {Object.entries(groupedData).map(([monthYear, transactions]) => (
-      <div key={monthYear}>
-        <h3>{monthYear}</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Customer ID</th>
-              <th>Customer Name</th>
-              <th>Transaction ID</th>
-              <th>Amount Spent</th>
-              <th>Transaction Date</th>
-              <th>Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((txn) => (
-              <tr key={txn.transactionId}>
-                <td>{txn.customerId || "N/A"}</td>
-                <td>{txn.customerName || "N/A"}</td>
-                <td>{txn.transactionId || "N/A"}</td>
-                <td>${txn.price ? txn.price.toFixed(2) : "0.00"}</td>
-                <td>{txn.purchaseDate || "Invalid Date"}</td>
-                <td>{txn.rewardPoints || 0}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    ))}
-  </div>
-);
+const UserMonthlyRewardsByMonth = ({ transactions }) => {
+  // Group data by month and year
+  const groupedRewards = groupRewardsByMonth(processMonthlyRewards(transactions));
 
-export default UserMonthlyRewards;
+  return (
+    <div>
+      <h2>User Monthly Rewards</h2>
+      {Object.keys(groupedRewards).map((key) => {
+        const [month, year] = key.split("-");
+        const rewards = groupedRewards[key];
+        return (
+          <div key={key}>
+            <h3>
+              Rewards for {month} {year}
+            </h3>
+            <table border="1">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Name</th>
+                  <th>Month</th>
+                  <th>Year</th>
+                  <th>Reward Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rewards.map((reward) => (
+                  <tr key={`${reward.customerId}-${month}-${year}`}>
+                    <td>{reward.customerId}</td>
+                    <td>{reward.name}</td>
+                    <td>{reward.month}</td>
+                    <td>{reward.year}</td>
+                    <td>{reward.rewardPoints}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+
+export default UserMonthlyRewardsByMonth;

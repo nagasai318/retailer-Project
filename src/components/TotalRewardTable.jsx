@@ -1,26 +1,31 @@
-// components/TotalRewards.js
 import React from "react";
+import { processTotalRewards } from "../utils/dataProcessor";
 
-const TotalRewards = ({ totalRewards }) => (
-  <div>
-    <h2>Total Rewards</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Customer Name</th>
-          <th>Total Reward Points</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Object.entries(totalRewards).map(([customerName, points]) => (
-          <tr key={customerName}>
-            <td>{customerName}</td>
-            <td>{points}</td>
+// Component for Total Rewards Table
+const TotalRewards = ({ transactions }) => {
+  const totalRewards = processTotalRewards(transactions);
+
+  return (
+    <div>
+      <h2>Total Rewards</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Customer Name</th>
+            <th>Total Reward Points</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+        </thead>
+        <tbody>
+          {totalRewards.map((reward) => (
+            <tr key={reward.customerName}>
+              <td>{reward.customerName}</td>
+              <td>{reward.totalPoints}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default TotalRewards;
