@@ -11,7 +11,6 @@ import Loader from "./Loader/Loader";
     const [error, setError] = useState('');
   
     useEffect(() => {
-        setTimeout(() => {
         fetchTransactions()
             .then((data) => {
             setTransactions(data);
@@ -21,8 +20,6 @@ import Loader from "./Loader/Loader";
             setError(error);
             setLoading(false);
             });
-        }
-        , 1000);
     },[]);
   
     return (
