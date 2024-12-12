@@ -8,7 +8,15 @@ This application processes customer transactions to calculate and display monthl
 2. **Monthly Rewards**: Aggregates reward points by customer, grouped by month and year.
 3. **Total Rewards**: Calculates total reward points for each customer.
 4. **Filtering**: Ignores transactions older than three months during monthly reward processing.
-5. **Unit Testing**: Includes comprehensive test cases for all utility functions using Jest.
+5. **Validation & Error Handling**:
+   - Validates transaction amounts and customer data
+   - Handles null/undefined transactions
+   - Prevents negative amount processing
+6. **Logging System**:
+   - Transaction validation warnings
+   - Reward point calculation tracking
+   - Processing error logging
+7. **Unit Testing**: Includes comprehensive test cases for all utility functions using Jest.
 
 ## File Structure
 
@@ -16,6 +24,7 @@ This application processes customer transactions to calculate and display monthl
 src/
 ├── utils/
 │   ├── dataProcessor.js  # Core logic for rewards processing
+│   ├── logger.js        # Logging utility
 ├── tests/
 │   ├── app.test.js       # Jest test cases
 ├── assets/

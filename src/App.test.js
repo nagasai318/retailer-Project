@@ -1,5 +1,5 @@
 import { calculateRewardPoints, groupRewardsByMonth, processMonthlyRewards, processTotalRewards } from "./utils/dataProcessor";
-
+import log from "./utils/logger"
 
 describe('Data Processor Functions', () => {
   // Test cases for calculateRewardPoints
@@ -112,5 +112,95 @@ describe('Data Processor Functions', () => {
       const result = processTotalRewards([]);
       expect(result).toEqual([]);
     });
+  });
+});
+
+// Add this describe block after the existing describe blocks in App.test.js
+
+describe("processTransactions validation and logging", () => {
+  let originalLogger;
+
+  beforeEach(() => {
+    originalLogger = { ...log };
+    log.warn = jest.fn();
+    log.error = jest.fn();
+    log.info = jest.fn();
+  });
+
+  afterEach(() => {
+    Object.assign(log, originalLogger);
+  });
+
+  test("handles null transaction", () => {
+    const transactions = [null];
+    const result = processTotalRewards(transactions);
+    expect(result).toEqual([]);
+    expect(log.warn).toHaveBeenCalledWith('Skipping invalid transaction:', null);
+  });
+
+  test("handles undefined transaction", () => {
+    const transactions = [undefined];
+    const result = processTotalRewards(transactions);
+    expect(result).toEqual([]);
+    expect(log.warn).toHaveBeenCalledWith('Skipping invalid transaction:', undefined);
+  });
+
+  test("handles transaction with invalid amount", () => {
+    const transactions = [
+      { customerName: "John Doe", amountSpent: "invalid" }
+    ];
+    const result = processTotalRewards(transactions);
+    expect(result).toEqual([]);
+    expect(log.warn).toHaveBeenCalledWith('Skipping invalid transaction:', transactions[0]);
+  });
+
+  test("handles transaction with negative amount", () => {
+    const transactions = [
+      { customerName: "John Doe", amountSpent: -50 }
+    ];
+    const result = processTotalRewards(transactions);
+    expect(result).toEqual([]);
+    expect(log.warn).toHaveBeenCalledWith('Negative amount encountered, skipping transaction:', transactions[0]);
+  });
+
+  test("handles transaction with missing customer name", () => {
+    const transactions = [
+      { amountSpent: 100 }
+    ];
+    const result = processTotalRewards(transactions);
+    expect(result).toEqual([]);
+    expect(log.warn).toHaveBeenCalledWith('Skipping invalid transaction:', transactions[0]);
+  });
+
+  test("processes mix of valid and invalid transactions", () => {
+    const transactions = [
+      { customerName: "John Doe", amountSpent: 120 },
+      { customerName: "Jane Smith", amountSpent: -50 },
+      null,
+      { customerName: "Bob Wilson", amountSpent: 75 }
+    ];
+    
+    const result = processTotalRewards(transactions);
+    
+    // Check final results
+    expect(result).toEqual([
+      { customerName: "John Doe", totalPoints: 90 },
+      { customerName: "Bob Wilson", totalPoints: 25 }
+    ]);
+  
+    // Verify warning logs
+    expect(log.warn).toHaveBeenCalledTimes(2);
+    expect(log.warn).toHaveBeenCalledWith('Negative amount encountered, skipping transaction:', 
+      expect.objectContaining({ customerName: "Jane Smith" }));
+    expect(log.warn).toHaveBeenCalledWith('Skipping invalid transaction:', null);
+  
+    // Verify info logs - now expecting 4 calls (one for initial points, one for total)
+    expect(log.info).toHaveBeenCalledTimes(4);
+    expect(log.info).toHaveBeenCalledWith(
+      expect.stringContaining("Updated total reward points for John Doe")
+    );
+    expect(log.info).toHaveBeenCalledWith(
+      expect.stringContaining("Updated total reward points for Bob Wilson")
+    );
   });
 });
