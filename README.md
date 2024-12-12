@@ -135,6 +135,13 @@ PASS  tests/app.test.js
       ✓ returns empty array for transactions older than 3 months (1ms)
     processTotalRewards
       ✓ calculates total rewards correctly for all customers (2ms)
+          processTransactions validation and logging
+      ✓ handles null transaction (2ms)
+      ✓ handles undefined transaction (1ms)
+      ✓ handles transaction with invalid amount (1ms)
+      ✓ handles transaction with negative amount (1ms)
+      ✓ handles transaction with missing customer name (1ms)
+      ✓ processes mix of valid and invalid transactions (2ms)
 ```
 
 ## Future Enhancements
