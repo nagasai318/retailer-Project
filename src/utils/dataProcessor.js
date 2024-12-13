@@ -112,7 +112,7 @@ export const processMonthlyRewards = (transactions) => {
   const totalRewards = {};
 
   transactions.forEach((transaction) => {
-    if (!transaction || isNaN(transaction.amountSpent) || !transaction.customerName || transaction === null || transaction === undefined) {
+    if (!transaction || isNaN(transaction.amountSpent) || !transaction.customerName) {
       log.warn('Skipping invalid transaction:', transaction);
       return;
     }
@@ -121,9 +121,11 @@ export const processMonthlyRewards = (transactions) => {
       return;
     }
     const rewardPoints = calculateRewardPoints(transaction.amountSpent);
-    if (!totalRewards[transaction.customerName]) {
-      totalRewards[transaction.customerName] = 0;
-    }
+  
+ // Use hasOwnProperty to check if the key exists
+ if (!Object.prototype.hasOwnProperty.call(totalRewards, transaction.customerName)) {
+  totalRewards[transaction.customerName] = 0;
+}
 
     totalRewards[transaction.customerName] += rewardPoints;
     log.info(`Updated total reward points for ${transaction.customerName}: ${totalRewards[transaction.customerName]}`);

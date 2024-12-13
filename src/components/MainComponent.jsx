@@ -3,7 +3,7 @@ import { fetchTransactions } from "../services/api";
 import TotalRewards from "./TotalRewardTable";
 import UserMonthlyReward from "./MonthlyRewardTable"
 import TransactionsTable from "./TransactionsTable";
-import Loader from "./Loader/Loader";
+import Loader from "./Loader";
   
   const Main = () => {
     const [transactions, setTransactions] = useState([]);

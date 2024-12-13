@@ -1,11 +1,14 @@
-import  mockTransactions  from "../data/transactions";
+import log from "loglevel";
 
 export const fetchTransactions = async () => {
-  return new Promise((resolve, reject) => {
-      if (mockTransactions) {
-        resolve(mockTransactions);
-      } else {
-        reject("Error fetching transactions");
-      }
-  });
-}
+  try {
+    const response = await fetch("/data.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    log.error("Failed to fetch transaction data:", err);
+  }
+};
