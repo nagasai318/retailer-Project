@@ -12,20 +12,14 @@ if (amount < 0) {
     log.warn('Negative value encountered:', amount);
     return 0;
 }
-  // 1 point for every dollar spent over $50, up to $100
-  if (amount > 50) points += Math.floor(amount - 50);
-  // Additional 1 point for every dollar spent over $100
-  if (amount > 100) points += Math.floor(amount - 100);
+if (amount > 50) {
+  points += Math.floor(amount - 50);
+}
+if (amount > 100) {
+  points += Math.floor(amount - 100); // Add additional points for the amount exceeding $100
+}
   log.info(`Reward points calculated for amount ${amount}: ${points}`);
   return points;
-};
-
-// Helper function to format the date as "YYYY-MMM"
-export const formatMonthYear = (date) => {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const year = date.getFullYear();
-  const month = months[date.getMonth()];
-  return `${year}-${month}`;
 };
 
 // Group rewards by month and year
@@ -54,8 +48,9 @@ export const processMonthlyRewards = (transactions) => {
     const threeMonthsAgo = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() - 3,
-      currentDate.getDate()
+      1 // Include the start of the month three months ago
     );
+    console.log("threeMonth",threeMonthsAgo)
 
   transactions.forEach((transaction) => {
     const { customerId, customerName, amountSpent, transactionDate } = transaction;
@@ -72,10 +67,11 @@ export const processMonthlyRewards = (transactions) => {
       return;
     }
     const date = new Date(transactionDate);
-    if (date < threeMonthsAgo) 
-      {log.info('Skipping transaction older than 3 months:', transaction);
-        return; // Skip transactions older than 3 months
-      }
+    console.log(date,"date")
+    if (date < threeMonthsAgo || date > currentDate) {
+      log.info('Skipping transaction: outside 3-month range:', transaction);
+      return null; // Return null if the date is outside the range
+    }
     const year = date.getFullYear();
     const month = date.toLocaleString("default", { month: "short" }); // e.g., "Jan", "Feb"
     const rewardPoints = calculateRewardPoints(amountSpent);

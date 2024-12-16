@@ -6,8 +6,7 @@ export const fetchTransactions = async () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
-    return data;
+    return response;
   } catch (err) {
     log.error("Failed to fetch transaction data:", err);
   }

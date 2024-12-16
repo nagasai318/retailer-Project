@@ -1,9 +1,9 @@
 // App.js
-import MainComponent from "./components/MainComponent";
+import Main from "./views/MainComponent";
 import "./App.css"
 
 const App = () => (
-<MainComponent/>
+<Main/>
 );
 
 

@@ -11,5 +11,16 @@
     { "transactionId": 8, "customerId": "C001", "customerName": "John Doe", "amountSpent": 250.0,"productPurchased":"washing machine", "transactionDate": "2024-10-15" },
     { "transactionId": 9, "customerId": "C002", "customerName": "Jane Smith", "amountSpent": 125.0,"productPurchased":"iphone 16", "transactionDate": "2024-11-18" },
     { "transactionId": 10, "customerId": "C005", "customerName": "Jason", "amountSpent": 70.90,"productPurchased":"Ac", "transactionDate": "2023-12-25" },
-    { "transactionId": 11, "customerId": "C005", "customerName": "Jason", "amountSpent": 100 ,"productPurchased":"something", "transactionDate": "2023-12-1" }
+    { "transactionId": 11, "customerId": "C005", "customerName": "Jason", "amountSpent": 100 ,"productPurchased":"something", "transactionDate": "2024-12-1" },
+    { "transactionId": 11, "customerId": "C001", "customerName": "John Doe", "amountSpent": 120.0,"productPurchased":"galaxy", "transactionDate": "2024-12-21" },
+    { "transactionId": 12, "customerId": "C002", "customerName": "Jane Smith", "amountSpent": 75.0,"productPurchased":"pro", "transactionDate": "2024-04-10" },
+    { "transactionId": 13, "customerId": "C001", "customerName": "John Doe", "amountSpent": 200.0,"productPurchased":"Venture", "transactionDate": "2024-06-05" },
+    { "transactionId": 14, "customerId": "C003", "customerName": "Alice Johnson", "amountSpent": 150.0,"productPurchased":"oz", "transactionDate": "2024-01-15" },
+    { "transactionId": 15, "customerId": "C002", "customerName": "Jane Smith", "amountSpent": 100.4,"productPurchased":"Nuts", "transactionDate": "2022-02-30" },
+    { "transactionId": 16, "customerId": "C001", "customerName": "John Doe", "amountSpent": 50.0,"productPurchased":"Bolts", "transactionDate": "2022-10-20" },
+    { "transactionId": 17, "customerId": "C003", "customerName": "Alice Johnson", "amountSpent": 60.0,"productPurchased":"Wire", "transactionDate": "2024-07-10" },
+    { "transactionId": 18, "customerId": "C008", "customerName": "Pavan", "amountSpent": 250.0,"productPurchased":"cable", "transactionDate": "2024-11-15" },
+    { "transactionId": 19, "customerId": "C009", "customerName": "Swamy", "amountSpent": 125.0,"productPurchased":"iphone 18", "transactionDate": "2024-11-18" },
+    { "transactionId": 20, "customerId": "C006", "customerName": "Harsha", "amountSpent": 70.90,"productPurchased":"Heater", "transactionDate": "2024-10-25" },
+    { "transactionId": 21, "customerId": "C005", "customerName": "Jason", "amountSpent": 100.9,"productPurchased":"Charge", "transactionDate": "2025-01-02" }
   ]
