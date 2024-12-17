@@ -45,11 +45,8 @@ export const processMonthlyRewards = (transactions) => {
   const rewardsMap = {};
     // Get the current date and calculate the date three months ago
     const currentDate = new Date();
-    const threeMonthsAgo = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - 3,
-      1 // Include the start of the month three months ago
-    );
+    const threeMonthsAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 2, 1); // Start of three months ago
+    const startOfNextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1); // Start of next month
     console.log("threeMonth",threeMonthsAgo)
 
   transactions.forEach((transaction) => {
@@ -68,7 +65,7 @@ export const processMonthlyRewards = (transactions) => {
     }
     const date = new Date(transactionDate);
     console.log(date,"date")
-    if (date < threeMonthsAgo || date > currentDate) {
+    if (date < threeMonthsAgo || date >= startOfNextMonth ) {
       log.info('Skipping transaction: outside 3-month range:', transaction);
       return null; // Return null if the date is outside the range
     }
